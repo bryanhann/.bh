@@ -1,0 +1,6 @@
+echo ++profile 
+alias l="ls -G1FA"
+alias ll="ls -dGFA .*"
+alias .st="git status -s"
+source ~/.bashrc
+echo --profile
