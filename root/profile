@@ -1,5 +1,4 @@
-source $MUSE/features/tools/activate
+source $HOME/.improvement
 .mu_trace ++profile
-source $HOME/.murc
 source ~/.bashrc
 .mu_trace --profile

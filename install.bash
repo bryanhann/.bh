@@ -3,27 +3,20 @@
 # directory (not called from any other directory, and not
 # sourced. This directory should NOT be on $PATH. 
 ##################################################################
+
 [ "$0" == "./install.bash" ] || echo try \'./install.bash\' 
 [ "$0" == "./install.bash" ] || exit
 
-# UPDATE THESE IF CHANGES ARE MADE TO THE FILESTRUCSTURE
-export MUSE=$HOME/!
-export ROOT=$MUSE/root
+echo source \$HOME/.toolman   > $HOME/.improvement
+echo export MUSE=$PWD               >> $HOME/.improvement
+echo source \$MUSE/activate.bash    >> $HOME/.improvement
 
-# REFRESH THE SYMLINK
-rm -f $MUSE
-ln -s $PWD $MUSE
-
-# REWRITE THE $HOME/.* FILES
-for FILE in `ls $ROOT` ; do 
-    [ -e "$HOME/.$FILE" ] \
-            && [ "$1" == "--force" ] \
-            && rm $HOME/.$FILE
-    [ -e "$HOME/.$FILE" ] \
-	    && echo SKIPPING: $HOME/.$FILE \
-	    && continue
-    echo touching: $HOME/.$FILE 
-    echo export MUSE=$MUSE      >> $HOME/.$FILE
-    echo source $ROOT/$FILE     >> $HOME/.$FILE  
+for FILE in `ls $PWD/root` ; do 
+    [ "$1" == "--force" ] && rm $HOME/.$FILE
+    ln -s $PWD/root/$FILE      $HOME/.$FILE  
 done
 
+echo
+echo LOGGING IN
+bash --login
+echo LOGGED OUT

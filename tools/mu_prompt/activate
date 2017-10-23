@@ -1,0 +1,4 @@
+source $MUSE/tools/mu_prompt/git-prompt.sh
+PROMPT_COMMAND='__git_ps1 "[$MUSE_DEPTH] [\w]" "\\\$ "'
+PS1=$PROMPT_COMMAND
+export MUSE_DEPTH=$(( MUSE_DEPTH + 1 ))

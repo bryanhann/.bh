@@ -1,0 +1,12 @@
+.mu_export MU_ROOT   $HOME/.mu
+.mu_export MU_USER   $MU_ROOT/u
+.mu_export MU_ACC    $MU_USER/a
+.mu_export MU_TMP    $MU_USER/t
+.mu_export MU_FLAGS  $MU_USER/f
+
+.mu_mkdir $MU_ROOT 
+.mu_mkdir $MU_USER
+.mu_mkdir $MU_ACC 
+.mu_mkdir $MU_TMP 
+.mu_mkdir $MU_FLAGS 
+

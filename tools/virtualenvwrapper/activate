@@ -1,0 +1,4 @@
+.mu_trace ++virtualenvwrapper
+source $MUSE/tools/virtualenv/activate
+source $MUSE/tools/virtualenvwrapper/vendor/virtualenvwrapper.sh
+.mu_trace --virtualenvwrapper

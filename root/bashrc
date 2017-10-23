@@ -1,7 +1,7 @@
-source $MUSE/features/tools/activate
+source $HOME/.improvement
 .mu_trace ++bashrc
-source $MUSE/features/exittrap/activate
-source $MUSE/features/mu_prompt/activate
-source $MUSE/features/virtualenvwrapper/activate
+source $MUSE/tools/exittrap/activate
+source $MUSE/tools/mu_prompt/activate
+source $MUSE/tools/virtualenvwrapper/activate
 alias .z=$MUSE/scripts/zlog.bash
 .mu_trace --bashrc
