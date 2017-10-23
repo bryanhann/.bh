@@ -1,44 +1,29 @@
-
 ##################################################################
 # Confirm that this script was called from within its own 
 # directory (not called from any other directory, and not
 # sourced. This directory should NOT be on $PATH. 
 ##################################################################
-
-if [ ! "$0" == "./install.bash" ]; then
-       echo try \'./install.bash\' 
-       exit
-fi
+[ "$0" == "./install.bash" ] || echo try \'./install.bash\' 
+[ "$0" == "./install.bash" ] || exit
 
 # UPDATE THESE IF CHANGES ARE MADE TO THE FILESTRUCSTURE
-export ROOT=root
-export BANG=!
-export MUSE=muse
-export LIST=$ROOT/targets
+export MUSE=$HOME/!
+export ROOT=$MUSE/root
 
-# THESE ARE WHAT WE MUST WORK WITH
-export ROOT=$PWD/$ROOT
-export BANG=$HOME/$BANG
-export MUSE=$BANG #/$MUSE
-export LIST=$MUSE/$LIST
+# REFRESH THE SYMLINK
+rm -f $MUSE
+ln -s $PWD $MUSE
 
-
-# WE RENEW THE LINK
-rm -f $BANG
-ln -s $PWD $BANG
-
-
-# WE CAN NOW READ THE LIST OF FILES TO BE OVERWRITTEN
-for FILE in `cat $LIST` ; do 
-    [ -e "$HOME/$FILE" ] \
+# REWRITE THE $HOME/.* FILES
+for FILE in `ls $ROOT` ; do 
+    [ -e "$HOME/.$FILE" ] \
             && [ "$1" == "--force" ] \
-            && rm $HOME/$FILE
-    [ -e "$HOME/$FILE" ] \
-	    && echo SKIPPING: $HOME/$FILE \
+            && rm $HOME/.$FILE
+    [ -e "$HOME/.$FILE" ] \
+	    && echo SKIPPING: $HOME/.$FILE \
 	    && continue
-    echo touching: $HOME/$FILE 
-    echo export BANG=$BANG      >> $HOME/$FILE
-    echo export MUSE=$MUSE      >> $HOME/$FILE
-    echo source $BANG/root/$FILE     >> $HOME/$FILE  
+    echo touching: $HOME/.$FILE 
+    echo export MUSE=$MUSE      >> $HOME/.$FILE
+    echo source $ROOT/$FILE     >> $HOME/.$FILE  
 done
 
