@@ -14,18 +14,18 @@ fi
 export ROOT=root
 export BANG=!
 export MUSE=muse
-export LIST=targets
+export LIST=$ROOT/targets
 
 # THESE ARE WHAT WE MUST WORK WITH
 export ROOT=$PWD/$ROOT
 export BANG=$HOME/$BANG
-export MUSE=$BANG/$MUSE
+export MUSE=$BANG #/$MUSE
 export LIST=$MUSE/$LIST
 
 
 # WE RENEW THE LINK
 rm -f $BANG
-ln -s $ROOT $BANG
+ln -s $PWD $BANG
 
 
 # WE CAN NOW READ THE LIST OF FILES TO BE OVERWRITTEN
@@ -39,6 +39,6 @@ for FILE in `cat $LIST` ; do
     echo touching: $HOME/$FILE 
     echo export BANG=$BANG      >> $HOME/$FILE
     echo export MUSE=$MUSE      >> $HOME/$FILE
-    echo source $BANG/$FILE     >> $HOME/$FILE  
+    echo source $BANG/root/$FILE     >> $HOME/$FILE  
 done
 
