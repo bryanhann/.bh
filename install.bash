@@ -7,16 +7,16 @@
 [ "$0" == "./install.bash" ] || echo try \'./install.bash\' 
 [ "$0" == "./install.bash" ] || exit
 
-echo source \$HOME/.toolman   > $HOME/.improvement
-echo export MUSE=$PWD               >> $HOME/.improvement
-echo source \$MUSE/activate.bash    >> $HOME/.improvement
-
 for FILE in `ls $PWD/root` ; do 
     [ "$1" == "--force" ] && rm $HOME/.$FILE
     ln -s $PWD/root/$FILE      $HOME/.$FILE  
 done
 
-echo
-echo LOGGING IN
+rm $HOME/.imp
+rm $HOME/.improvememnt
+ln -s $PWD      $HOME/.improvement  
+
+echo $PWD has been installed. Starting a post-installation demo shell.
+#echo LOGGING IN
 bash --login
-echo LOGGED OUT
+#echo LOGGED OUT

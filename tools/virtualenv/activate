@@ -1,4 +1,0 @@
-.mu_trace ++virtualenv
-# The directory ./bin contains the script magic.... If it is not found, add the bin to the path.
-magic93876208640920696709  2> $HOME/deleteme || export PATH=$PATH:$MUSE/tools/virtualenv/path
-.mu_trace --virtualenv

@@ -1,4 +1,6 @@
-source $HOME/.improvement
-.mu_trace ++profile
+echo .profile is being improved
+export PATH=$PATH:$HOME/.improvement/vendor/virtualenv
+export PATH=$HOME/bch.git/bin:$PATH
+export BCH_GIT=~/bch.git
 source ~/.bashrc
-.mu_trace --profile
+echo .profile has been improved
