@@ -1,0 +1,14 @@
+HERE=$(dirname $(grealpath $0))
+
+[ "$1" == ""  ] && SHELL=${HERE}/repos/shell
+[ "$1" == ""  ] || SHELL=$1
+DOT=${HERE}/dot
+rm -rf $DOT 2> /dev/null
+mkdir -p $DOT
+echo 77 ${DOT}
+git clone https://github.com/bryanhann/bch.shell ${SHELL}
+echo "source ${SHELL}/dot/zprofile " > ${DOT}/zprofile
+echo "source ${SHELL}/dot/profile "  > ${DOT}/profile
+echo "source ${SHELL}/dot/bashrc "   > ${DOT}/bashrc
+#echo "source ${SHELL}/zsh/zshrc    " > ${DOT}/zshrc
+#echo $1/zsh/.zshrc  $(dirname $0)/dot/zshrc
