@@ -1,16 +1,18 @@
 #echo ++ zshrc.sh $0
 #---------------------------------------------------------------------------
 _export () {export ${1}=${2};}
+bhz_export () {export ${1}=${2};}
+bhz_install () { source ${ZDOTDIR}/plugins/${1}/install.sh; }
 #---------------------------------------------------------------------------
-source ${0}.dunders/install.sh
-source ${0}.venv/install.sh
-source ${0}.vwrap/install.sh
-source ${0}.misc/install.sh
-source ${0}.zjot/install.sh
+bhz_install dunders
+bhz_install venv
+bhz_install vwrap
+bhz_install misc
+bhz_install zjot
 #---------------------------------------------------------------------------
-_export ZSH_THEME   gnzh
+bhz_export ZSH_THEME   gnzh
 plugins=(git)
 #---------------------------------------------------------------------------
-source ${0}.omzsh/install.sh
+bhz_install omzsh
 #---------------------------------------------------------------------------
 #echo -- zshrc.sh
