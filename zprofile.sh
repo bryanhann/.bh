@@ -6,7 +6,7 @@ source ${HERE}/env/XDG.sh
 source ${HERE}/env/pip.sh
 
 _export ZDOTDIR     ${HERE}
-_export ZDOTBLD     ${HOME}/.local/bhzsh
+_export ZDOTBLD     ${XDG_X_BUILD}/bhzsh
 _export PATH        ${PATH}:${HOME}/.local/bin
 #echo -- zprofile
 
