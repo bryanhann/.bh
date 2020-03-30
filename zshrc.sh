@@ -1,17 +1,11 @@
 #echo ++ zshrc.sh $0
-#---------------------------------------------------------------------------
-source ${ZDOTDIR}/tools/bhz.sh
-source ${ZDOTDIR}/tools/r20.sh
-
-bhz_install dunders
-bhz_install venv
-bhz_install vwrap
-bhz_install misc
-bhz_install zjot
-#---------------------------------------------------------------------------
-bhz_export ZSH_THEME   gnzh
-plugins=(git)
-#---------------------------------------------------------------------------
-bhz_install omzsh
-#---------------------------------------------------------------------------
+source $(dirname $(grealpath $0))/init.sh
+source ${HERE}/misc/aliases.sh
+source ${HERE}/env/vwrap.sh
+source ${HERE}/env/omzsh.sh
+_r20 dunders
+_r20 venv
+_r20 zjot
+_r20 vwrap
+_r20 omzsh
 #echo -- zshrc.sh
