@@ -1,9 +1,8 @@
 #echo ++ zshrc.sh $0
 #---------------------------------------------------------------------------
-_export () {export ${1}=${2};}
-bhz_export () {export ${1}=${2};}
-bhz_install () { source ${ZDOTDIR}/plugins/${1}/install.sh; }
-#---------------------------------------------------------------------------
+source ${ZDOTDIR}/tools/bhz.sh
+source ${ZDOTDIR}/tools/r20.sh
+
 bhz_install dunders
 bhz_install venv
 bhz_install vwrap
