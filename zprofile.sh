@@ -1,39 +1,35 @@
 #echo ++ zprofile
 
-_export () {export ${1}=${2};}
+#----------------------------------------------------------------------
+# SET PATH
+#----------------------------------------------------------------------
 
-_export HERE                $(dirname $(grealpath ${0}))
-_export XDG_DATA_HOME       ${HOME}/.local/share
-_export XDG_DATA_DIRS       /usr/local/share/:/usr/share/
-_export XDG_CONFIG_HOME     ${HOME}/.config
-_export XDG_CONFIG_DIRS     ${HOME}/.local./etc/xdg:/etc/xdg
-_export XDG_CACHE_HOME      ${HOME}/.cache
-_export XDG_RUNTIME_DIR     ${HOME}/.0700
-_export XDG_X_ACC           ${HOME}/.acc
-_export XDG_X_BUILD         ${HOME}/.build
-_export PIP_DOWNLOAD_CACHE  ${XDG_CACHE_HOME}/pip
-_export PATH                ${PATH}:${HOME}/.local/bin
-_export ZDOTDIR             ${HERE}
+export PATH=${PATH}:$(dirname $(grealpath $0))/sbin
+export PATH=${PATH}:${HOME}/.local/bin
 
-#--------------------------------------------------
-# ACTIVATE OHM
-#--------------------------------------------------
+#----------------------------------------------------------------------
+# SET ZDOTDIR
+#
+# When zsh is invoked it tries to source an rcfile named [.zshrc]. By
+# default zsh expects this file to be in the folder [~]. We override
+# this default by setting the environment variable [$ZDOTDIR], which
+# causes zsh to look for the file in the directory [$ZDOTDIR] instead.
+#----------------------------------------------------------------------
 
-# this is the activation file:
-_export src ${HOME}/.config/ohm/activate.sh
+export ZDOTDIR=$(dirname $(grealpath ${0}))
 
-# seting OHM_ROOT is precondition.
-_export OHM_ROOT  ${HERE}
+#----------------------------------------------------------------------
+# SET OHM_ROOT
+# SOURCE OHM/ACTIVATE => SET OHM_BUILD
+#
+# We assume the existence of file [~/.config/ohm/activate.sh]
+# and attempt to source it. The file expects [$OHM_ROOT] to be
+# set, and it will set [$OHM_BUILD]. Since the file is not under
+# our control we will test whether sourcing it sets it.
+#----------------------------------------------------------------------
 
-# activate
-source ${src}
-
-# postcondition
+export OHM_ROOT=$(dirname $(grealpath $0))
+source ${HOME}/.config/ohm/activate.sh
 [ -z "${OHM_BUILD}" ] && { echo $0: "\$OHM_BUILD: not set by $src"; }
 
-#_export ZDOTBLD             ${OHM_BUILD}
-
 #echo -- zprofile
-
-
-
