@@ -14,6 +14,8 @@ _r20 zjot
 _r20 vwrap
 _r20 omzsh
 _r20 bch
+_r20 libre
+_r20 bch.ws852
 
 #echo -- zshrc.sh
 
