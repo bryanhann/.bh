@@ -1,23 +1,14 @@
-#echo ++ zshrc.sh $0
-
-_r20 () {
-    local dst=${R20_OHM_CONFIG_BUILD}/r20.activate/${1}
-    local src=https://github.com/bryanhann/r20.activate.${1}.git
-    [ -d ${dst} ] || echo '\n>>>>>' cloning ${1} '\n'
-    [ -d ${dst} ] || git clone $src $dst
-    source ${dst}/activate.sh
-}
-
-#_r20 core
-echo 76
-_r20 dunders
-_r20 venv
-_r20 zjot
-_r20 vwrap
-_r20 omzsh
-_r20 bch
-_r20 libre
-_r20 bch.ws852
-
-#echo -- zshrc.sh
-
+source      $(dirname $(grealpath $0))/functions.sh
+r20enter    $(basename $0)
+r20.assert-env-vars.sh  R20_ZPROFILE_TMP R20_ZPROFILE_BIN
+r20source   ${HOME}/.config/r20/init/activate.sh
+r20.assert-env-vars.sh  R20_INIT_BLD R20_INIT_URL R20_INIT_CFG
+r20install  dunders #-r
+r20install  venv #-r
+r20install  bch
+r20install  zjot
+r20install  omzsh
+r20install  libre
+r20install  vwrap #-r
+r20install  bch.ws852
+r20exit
