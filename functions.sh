@@ -1,54 +1,62 @@
-export SCOPE=()
 _block  () { tput setaf $1; [[ "$2" == "." ]] || tput setab $2; shift; shift; echo -n $*; tput sgr0; }
 _colors () { for f in $(seq 0 16); do for b in $(seq 0 16); do _block $f $b "$f/$b "; done; echo; done }
-_black  () { _block 15 0 $* ; }
-_red    () { _block 15 9 $* ; }
-_green  () { _block 10 0 $* ; }
-_green  () { _block 0 10 $* ; }
-_yellow () { _block 16 11 $* ; }
-_blue   () { _block 15 4 $* ; }
-_red    () { _block 15 9 $* ; }
-_grey   () { _block 16 7 $* ; }
-_green_on_white () { _block 6 . $*; }
-_red_on_white   () { _block 13 . $*; }
-_black_on_grey  () { _block 16 15 $*; }
+_black  () { _block  15   0  $*; }
+_red    () { _block  15   9  $*; }
+_gr_bl  () { _block  10   0  $*; }
+_green  () { _block   0  10  " $* "; }
+_yellow () { _block  16  11  $*; }
+_blue   () { _block  15   4  "$*"; }
+_red    () { _block  15   9  " $* "; }
+_grey   () { _block  16   7  $*; }
+_gre_wh () { _block   6   .  $*; }
+_red_wh () { _block  13   .  $*; }
+_bla_gr () { _block  16  15  $*; }
+_skip   () { _block  10  15  " $* "; }
+_doit   () { _block  16  15  " $* "; }
+_long   () { _r20_prefix; _yellow "       $* "  ; echo; }
+_short  () { _r20_prefix; _yellow " $* "        ; echo; }
+_star   () { _r20_prefix; _green '*'; _yellow "     $*"; echo; }
 
-r20note   () { tput smso; echo $SCOPE $*; tput rmso; }
-r20exit   () { unset 'SCOPE[${#SCOPE[@]}]'; }
-r20enter  () { SCOPE+="[$1]"; }
-r20map    () { fn=$1;shift;for item in $*; do $fn $item; done; }
-r20export () { r20prefix; _yellow " $1 := $2 "; echo; export $1=$2; }
-r20env    () { r20map r20try $(set|grep "^R20"); }
-r20cmd    () { _black ${SCOPE}; _yellow " $ $*"; echo; $* }
-r20all    () { r20note "    $ set|grep ^R20"; set|grep "^R20"; }
-r20prefix () { _black ${SCOPE}; _blue "$PACKAGE"; }
+_r20_pip_check      () { pip list | grep "^$1 " > /dev/null; return $?; }
+_r20_pip_lookup     () { _r20_pip_check $1 && echo $(pip list | grep "^$1 ") || echo ""; }
+_r20_pip_confirm    () { _star confirmed: pip: $(_r20_pip_lookup $1); }
+_r20_pip_install    () { _star installing: pip: $1 ; pip install $1; }
+_r20_try_source     () { [ -f $1 ]    && _r20_cmd_yes source $1    || _r20_cmd_bad source $1; }
+_r20_try_clone      () { [ ! -d $2 ] && _r20_cmd_yes git clone $* || _r20_cmd_non clone $* }
+_r20_show           () { _short "[$1] == [$(eval echo \$$1)]"; }
+_r20_prefix         () { _black ${SCOPE}; _blue "$PACKAGE"; }
+_r20_cmd_yes        () { _r20_prefix; _green $; _doit $* ; echo; $* }
+_r20_cmd_non        () { _r20_prefix; _green X; _skip $* ; echo; }
+_r20_cmd_bad        () { _r20_prefix; _red   X; _skip $*; echo; }
+_r20_export         () { _short "$1 <-- $2"; export $1=$2; }
+_r20_enter          () { SCOPE="[$1]"; }
+_r20_exit           () { unset SCOPE; }
 
-#_colors
+#-----------------------------------------------------------------------------#
+# API r20pip_install
+#-----------------------------------------------------------------------------#
 
-r20pip_install () {
-    pip list | grep "^$1 " > /dev/null &&  {
-        r20prefix; _yellow " confirmed: (pip)" $(pip list | grep "^$1 "); echo;
-        return
-    }
-    r20prefix;  _yellow " installing: (pip) $1 "; echo;
-    pip install $1;
-    r20prefix; _yellow " confirmed: (pip)" $(pip list | grep "^$1 "); echo;
-
+r20pip_install  () {
+    _r20_pip_check $1 || _r20_pip_install $1
+    _r20_pip_confirm $1;
 }
+
+#-----------------------------------------------------------------------------#
+# API r20export
+#-----------------------------------------------------------------------------#
+
+r20export   () { _star "$1 <== $2"; export $1=$2; }
+
+#-----------------------------------------------------------------------------#
+# API r20install
+#-----------------------------------------------------------------------------#
 
 r20install () {
     export PACKAGE="[$1]"
-    src=${R20_INIT_URL}/r20.activate.${1}.git
-    dst=${R20_INIT_BLD}/${1}
-    precfg=${R20_INIT_CFG}/${1}/activate.sh
-    postcfg=${R20_INIT_BLD}/${1}/activate.sh
+    echo
     [[ "$2" == "-r" ]] && { rm -rf ${R20_INIT_BLD}/${1}; }
-    [ -d $dst ] && { r20prefix; _grey  " $ git clone $src $dst"; echo; }
-    [ -d $dst ] || { r20prefix;  _green " $ git clone $src $dst"; echo; git clone $src $dst }
-    [ -f $precfg ] && { r20prefix; _green " $ source $precfg"; echo; source $precfg }
-    [ -f $precfg ] || { r20prefix; _red   " $ source $precfg"; echo; }
-    [ -f $postcfg ] && { r20prefix; _green " $ source $postcfg"; echo; source $postcfg }
-    [ -f $postcfg ] || { r20prefix; _red   " $ source $postcfg"; echo; }
-    export PACKAGE=$0
+    _r20_try_clone ${R20_INIT_URL}/r20.activate.${1}.git ${R20_INIT_BLD}/${1}
+    _r20_try_source ${R20_INIT_CFG}/${1}/activate.sh
+    _r20_try_source ${R20_INIT_BLD}/${1}/activate.sh
+    unset PACKAGE
 }
-
