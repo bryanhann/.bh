@@ -1,3 +1,0 @@
-    echo PRECONDITION-EXCEPTION
-    echo "    script: $1"
-    echo "    issue:  expected \${$2} to be defined"
