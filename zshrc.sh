@@ -16,6 +16,6 @@ r20install  zjot
 r20install  omzsh
 r20install  libre
 r20install  vwrap #-r
-r20install  bch.ws852
+r20install  ws852
 _r20_exit
 #_colors
