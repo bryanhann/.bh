@@ -1,34 +1,33 @@
-_block  () { tput setaf $1; [[ "$2" == "." ]] || tput setab $2; shift; shift; echo -n $*; tput sgr0; }
-_colors () { for f in $(seq 0 16); do for b in $(seq 0 16); do _block $f $b "$f/$b "; done; echo; done }
-_black  () { _block  15   0  $*; }
-_red    () { _block  15   9  $*; }
-_gr_bl  () { _block  10   0  $*; }
-_green  () { _block   0  10  " $* "; }
-_yellow () { _block  16  11  $*; }
-_blue   () { _block  15   4  "$*"; }
-_red    () { _block  15   9  " $* "; }
-_grey   () { _block  16   7  $*; }
-_gre_wh () { _block   6   .  $*; }
-_red_wh () { _block  13   .  $*; }
-_bla_gr () { _block  16  15  $*; }
-_skip   () { _block  10  15  " $* "; }
-_doit   () { _block  16  15  " $* "; }
-_long   () { _r20_prefix; _yellow "       $* "  ; echo; }
-_short  () { _r20_prefix; _yellow " $* "        ; echo; }
-_star   () { _r20_prefix; _green '*'; _yellow "     $*"; echo; }
+_block      () { tput setaf $1; [[ "$2" == "." ]] || tput setab $2; shift; shift; echo -n $*; tput sgr0; }
+_colors     () { for f in $(seq 0 16); do for b in $(seq 0 16); do _block $f $b "$f/$b "; done; echo; done }
+_black      () { _block  15   0  $*; }
+_blue       () { _block  15   4  $*; }
+_yellow     () { _block  16  11  $*; }
+_green      () { _block   0  10  $*; }
+_red        () { _block  15   9  $*; }
+
+_skip       () { _block  10  15  " $* "; }
+_doit       () { _block  16  15  " $* "; }
+
+_note       () { _r20_prefix;               _yellow " $* "     ; echo; }
+_star       () { _r20_prefix; _green " * "; _yellow "     $* " ; echo; }
 
 _r20_pip_check      () { pip list | grep "^$1 " > /dev/null; return $?; }
 _r20_pip_lookup     () { _r20_pip_check $1 && echo $(pip list | grep "^$1 ") || echo ""; }
 _r20_pip_confirm    () { _star confirmed: pip: $(_r20_pip_lookup $1); }
 _r20_pip_install    () { _star installing: pip: $1 ; pip install $1; }
-_r20_try_source     () { [ -f $1 ]    && _r20_cmd_yes source $1    || _r20_cmd_bad source $1; }
+
+_r20_try_source     () { [ -f $1 ]   && _r20_cmd_yes source $1    || _r20_cmd_bad source $1; }
 _r20_try_clone      () { [ ! -d $2 ] && _r20_cmd_yes git clone $* || _r20_cmd_non clone $* }
-_r20_show           () { _short "[$1] == [$(eval echo \$$1)]"; }
-_r20_prefix         () { _black ${SCOPE}; _blue "$PACKAGE"; }
-_r20_cmd_yes        () { _r20_prefix; _green $; _doit $* ; echo; $* }
-_r20_cmd_non        () { _r20_prefix; _green X; _skip $* ; echo; }
-_r20_cmd_bad        () { _r20_prefix; _red   X; _skip $*; echo; }
-_r20_export         () { _short "$1 <-- $2"; export $1=$2; }
+
+_r20_show           () { _note "[$1] == [$(eval echo \$$1)]"; }
+_r20_prefix         () { _black ${SCOPE}; _blue ${PACKAGE}; }
+
+_r20_cmd_yes        () { _r20_prefix ; _green " $ " ; _doit $* ; echo; $* }
+_r20_cmd_non        () { _r20_prefix ; _green " X " ; _skip $* ; echo; }
+_r20_cmd_bad        () { _r20_prefix ; _red   " X " ; _skip $* ; echo; }
+
+_r20_export         () { _note "$1 <-- $2"; export $1=$2; }
 _r20_enter          () { SCOPE="[$1]"; }
 _r20_exit           () { unset SCOPE; }
 
