@@ -21,7 +21,7 @@ _r20_try_source     () { [ -f $1 ]   && _r20_cmd_yes source $1    || _r20_cmd_ba
 _r20_try_clone      () { [ ! -d $2 ] && _r20_cmd_yes git clone $* || _r20_cmd_non clone $* }
 
 _r20_show           () { _note "[$1] == [$(eval echo \$$1)]"; }
-_r20_prefix         () { _black ${SCOPE}; _blue ${PACKAGE}; }
+_r20_prefix         () { _black ${SCOPE}; _blue "[${R20PACKAGENAME}]"; }
 
 _r20_cmd_yes        () { _r20_prefix ; _green " $ " ; _doit $* ; echo; $* }
 _r20_cmd_non        () { _r20_prefix ; _green " X " ; _skip $* ; echo; }
@@ -44,18 +44,20 @@ r20pip_install  () {
 # API r20export
 #-----------------------------------------------------------------------------#
 
-r20export   () { _star "$1 <== $2"; export $1=$2; }
-
+r20export   () { _star "$1 <-- $2"; export $1=$2; }
+r20config   () { r20export R20_${R20PACKAGENAME}_CFG_$1 $2 }
 #-----------------------------------------------------------------------------#
 # API r20install
 #-----------------------------------------------------------------------------#
 
 r20install () {
-    export PACKAGE="[$1]"
+    export R20PACKAGENAME="$1"
     echo
     [[ "$2" == "-r" ]] && { rm -rf ${R20_INIT_BLD}/${1}; }
+    _r20_export R20_${1}_BLD ${R20_INIT_BLD}/${1}
+    _r20_export R20_${1}_CFG ${R20_INIT_CFG}/${1}
     _r20_try_clone ${R20_INIT_URL}/r20.activate.${1}.git ${R20_INIT_BLD}/${1}
     _r20_try_source ${R20_INIT_CFG}/${1}/activate.sh
     _r20_try_source ${R20_INIT_BLD}/${1}/activate.sh
-    unset PACKAGE
+    unset R20PACKAGENAME
 }
