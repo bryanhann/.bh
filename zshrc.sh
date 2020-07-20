@@ -12,9 +12,9 @@ source $R20/modules/depth/activate.sh
 source $R20/modules/venv/activate.sh
 source $R20/modules/dunders/activate.sh
 source $R20/modules/bch/activate.sh
-r20install  zjot
-r20install  omzsh
-r20install  libre
-r20install  ws852
+source $R20/modules/ws852/activate.sh
+#r20install  zjot
+#r20install  omzsh
+#r20install  libre
 _r20_exit
 #_colors
