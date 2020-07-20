@@ -10,7 +10,7 @@ _r20_show   R20_ZPROFILE_TMP
 _r20_show   R20_ZPROFILE_BIN
 source $R20/modules/depth.sh
 source $R20/modules/venv.sh
-r20install  dunders #-r
+source $R20/modules/dunders.sh
 r20install  bch
 r20install  zjot
 r20install  omzsh
