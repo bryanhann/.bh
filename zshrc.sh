@@ -8,10 +8,10 @@ _r20_show   R20_INIT_BLD
 _r20_show   R20_INIT_URL
 _r20_show   R20_ZPROFILE_TMP
 _r20_show   R20_ZPROFILE_BIN
-source $R20/modules/depth.sh
-source $R20/modules/venv.sh
-source $R20/modules/dunders.sh
-r20install  bch
+source $R20/modules/depth/activate.sh
+source $R20/modules/venv/activate.sh
+source $R20/modules/dunders/activate.sh
+source $R20/modules/bch/activate.sh
 r20install  zjot
 r20install  omzsh
 r20install  libre
