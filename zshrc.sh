@@ -8,8 +8,8 @@ _r20_show   R20_INIT_BLD
 _r20_show   R20_INIT_URL
 _r20_show   R20_ZPROFILE_TMP
 _r20_show   R20_ZPROFILE_BIN
-source $R20/depth.sh
-source $R20/venv.sh
+source $R20/modules/depth.sh
+source $R20/modules/venv.sh
 r20install  dunders #-r
 r20install  bch
 r20install  zjot
