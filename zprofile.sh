@@ -8,4 +8,5 @@ _r20_export R20_INIT_BLD        ${R20}/.B
 _r20_export R20_INIT_URL        https://github.com/bryanhann
 _r20_export R20_ZPROFILE_TMP    /tmp/$$
 _r20_export R20_ZPROFILE_BIN    ${R20_ZPROFILE_TMP}/bin
+_r20_export R20_DEPTH           -1
 _r20_exit

@@ -9,6 +9,11 @@ _r20_show   R20_INIT_URL
 _r20_show   R20_ZPROFILE_TMP
 _r20_show   R20_ZPROFILE_BIN
 
+##### DEPTH #####
+_r20_export R20_DEPTH $(( ${R20_DEPTH} + 1 ))
+function exit() { [[ "${R20_DEPTH}" == "0" ]] && echo try 'builtin exit' || builtin exit }
+function depth() { echo ${R20_DEPTH} }
+
 r20install  dunders #-r
 r20install  venv #-r
 r20install  bch
