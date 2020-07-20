@@ -14,6 +14,7 @@ source $R20/modules/venv/activate.sh
 source $R20/modules/dunders/activate.sh
 source $R20/modules/bch/activate.sh
 source $R20/modules/ws852/activate.sh
-r20install  omzsh
+source $R20/modules/omzsh/activate.sh
+#r20install  omzsh
 _r20_exit
 #_colors
