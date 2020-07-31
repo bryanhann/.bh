@@ -6,6 +6,7 @@
     .export BORGTEMP  $BORGHOME/.tmp
     .export BORGVENV  $BORGBUILD/venv
     .export ZSH       $BORGBUILD/omzsh
-#    .export PATH      $PATH:$BORGHOME/bin
+    .export PATH      $PATH:$BORGHOME/bin
+    .export PYTHONPATH ${PYTHONPATH}:${BORGHOME}/lib/python
     mkdir -p $BORGTEMP
 }

@@ -1,7 +1,5 @@
-hide
 .hide
 .B
-.zshrc
 repos
 __*
 .zcompdump*
