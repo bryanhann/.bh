@@ -5,3 +5,6 @@ hide
 repos
 __*
 .zcompdump*
+.build
+.log
+.tmp
