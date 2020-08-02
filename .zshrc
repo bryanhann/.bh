@@ -1,24 +1,13 @@
-#source ${ZDOTDIR}/zshrc.sh
-
-.source () {
-    echo '>>>>>>' .source $1
-    source $1
-}
-.devnul () { $* 2> ${BORGDEVNUL}; }
-.export () { export $1=$2; echo "$1 <-- $2" >> $ZDOTDIR/.log; }
-echo >> $ZDOTDIR/.log
-date >> $ZDOTDIR/.log
-echo >> $ZDOTDIR/.log
 cd $ZDOTDIR
-[[ -z "$BORG" ]] && {
-    export BORG=$ZDOTDIR
-    for script in $(  ls [0]*.sh | sort ) ; do
-        .source $script
-    done
-}
-
-for script in $(  ls [1-9]*.sh | sort ) ; do
-    #echo ">>>>>>>>>>>> $script <<<<<<<<<<<<" >> $ZDOTDIR/.log
-    .source $script
-done
-#cat $BORG/.log
+source $ZDOTDIR/functions
+_log "\n$(date)\n"
+_yellow "++[$ZDOTDIR/.zshrc]"
+_up
+    .exec()   { _red exec: $*; $*; } ; _note defining function .exec
+    .note()   { _note $*;     } ; _note defining function .note 
+    .export() { _export $*;   } ; _note defining function .export
+    .source() { _source $*;   } ; _note defining function .source
+    [[ -z "$BORG" ]] && {  for script in $(ls [0]*.sh   | sort) ; do _source $script; done }
+    [[ true       ]] && {  for script in $(ls [1-9]*.sh | sort) ; do _source $script; done }
+_down
+_yellow "--[$ZDOTDIR/.zshrc]"

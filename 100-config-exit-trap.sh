@@ -6,5 +6,6 @@ exit () {
         builtin exit
     fi
 }
+.note redefining function: exit
 .export BORGDEPTH $(( $BORGDEPTH + 1 ))
 

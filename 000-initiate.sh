@@ -1,4 +1,5 @@
 [[ -z ${BORGHOME} ]] && {
+    .export BORG       $ZDOTDIR
     .export BORGHOME   $ZDOTDIR
     .export PYTHONPATH $BORGHOME/lib/python
 

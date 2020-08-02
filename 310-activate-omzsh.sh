@@ -8,6 +8,6 @@
 # jaischeema : pumpkin at ~/borg-dev ±(dev) ✗ ❯
 # strug : origin/dev
 
-ZSH_THEME=kafeitu # plugins must not contain virtualenv for prompt to show virtual_env)
+.export ZSH_THEME kafeitu # plugins must not contain virtualenv for prompt to show virtual_env)
 plugins=(git virtualenvwrapper)
-source $ZSH/oh-my-zsh.sh
+.source $ZSH/oh-my-zsh.sh
