@@ -1,0 +1,16 @@
+_color   () { tput setaf $1; [[ "$2" == "." ]] || tput setab $2; shift; shift; echo -n $*; tput sgr0; }
+_black   () { _color 15  0 $(_tab)$*; echo; }
+_blue    () { _color 15  4 $(_tab)$*; echo; }
+_yellow  () { _color 16 11 $(_tab)$*; echo; }
+_green   () { _color  0 10 $(_tab)$*; echo; }
+_red     () { _color 15  9 $(_tab)$*; echo; }
+_up      () {  export NEST=$(($NEST+1)); }
+_down    () {  export NEST=$(($NEST-1)); }
+_zero    () {  export NEST=0; }
+_tab     () { [[ "${NEST}" == "0" ]] || for i in $( seq $NEST ); do printf '\\t'; done ; }
+_log     () { echo $* >> $ZDOTDIR/.log }
+_note ()   { _green \# $* ; }
+_export () { export $1=$2; _blue "setting \$$1 := [$2]";  }
+_source () { _yellow "++[. $1]" ; _up ; source $1 ; _down ; _yellow "--[. $1]" }
+_zero
+
