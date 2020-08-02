@@ -65,6 +65,6 @@ function .source { --doc Log a source with nesting
 }
 
 function .help { --doc Display documented functions
-   grep $ZDOTDIR/functions.sh -e "function \."
+    grep * -e "--doc"  | grep --color=always -e " \..*"
 }
 

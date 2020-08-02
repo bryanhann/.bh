@@ -13,6 +13,8 @@
 
 
 .note defining function .remove-python
-function .remove-python () { rm -rf $BORGVENV; }
+function .remove-python { --doc remove the python
+    rm -rf $BORGVENV;
+}
 
 #.exec source virtualenvwrapper.sh
