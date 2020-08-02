@@ -3,7 +3,7 @@
     .note omzsh is already installed
 }|| {
     .note installing omzsh
-    $BORGHOME/vendor/omzsh/install.sh --unattended ;
+    $BORG/vendor/omzsh/install.sh --unattended ;
 }
 
 .note defining function .remove-omzsh
