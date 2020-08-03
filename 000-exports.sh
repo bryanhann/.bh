@@ -1,15 +1,20 @@
-.export BORG        $ZDOTDIR
-.export BUILD       ~/.build
-.export BorgTEMP    $BUILD/BorgTEMP
-.export BorgBIN     $BUILD/BorgBIN
-.export BorgVENV    $BUILD/BorgVENV
+.export BORG            $ZDOTDIR
+.export BORG_BUILD      ${HOME}/.build
+.export BORG_TEMP       $BORG_BUILD/TEMP
+.export BORG_BIN        $BORG_BUILD/BIN
+.export BORG_VENV       $BORG_BUILD/VENV
+.export BORG_REPOS      $BORG_BUILD/REPOS
+.export WORKON_HOME     $BORG_BUILD/WORKON_HOME
+.export PROJECT_HOME    $BORG_BUILD/PROJECT_HOME
+.export ZSH             $BORG_BUILD/ZSH
+.export PATH            $BORG/sbin:$PATH:$BORG_BIN
+.export PYTHONPATH      $BORG/lib/python
+.export VIRTUALENVWRAPPER_HOOK_DIR  ${HOME}/.local/borg/VIRTUALENVWRAPPER_HOOK_DIR
 
-.export PATH        $PATH:$BorgBIN
-.export ZSH         $BUILD/ZSH
-.export PYTHONPATH  $BORG/lib/python
-.export WORKON_HOME                 $BUILD/WORKON_HOME
-.export PROJECT_HOME                $BUILD/PROJECT_HOME
-.export VIRTUALENVWRAPPER_HOOK_DIR  $BUILD/VIRTUALENVWRAPPER_HOOK_DIR
+mkdir -p $WORKON_HOME
+mkdir -p $PROJECT_HOME
+rm -rf   $BORG_BIN
+mkdir -p $BORG_BIN
 
 .export HISTSIZE    5000            # How many lines of history to keep in memory
 .export HISTFILE    $BUILD/HISTFILE # Where to save history to disk
@@ -19,6 +24,3 @@
 .exec setopt sharehistory           # Share history across terminals
 .exec setopt incappendhistory       # Immediately
 
-
-mkdir -p $BorgTEMP
-mkdir -p $BorgBIN

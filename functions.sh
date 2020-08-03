@@ -58,7 +58,7 @@ function .export { --doc Log an export
 function .source { --doc Log a source with nesting
     _yellow "++[. $*]" ;
     _up ;
-    echo source $*
+    [[ -f ${SPLASH} ]] || echo source $*
     source $* ;
     _down ;
     _yellow "--[. $*]"
