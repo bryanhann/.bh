@@ -11,10 +11,3 @@
 .note copying fresh \'virtualenv\*\' files to \$BORG_BIN
 cp $BORG_VENV/bin/v* $BORG_BIN
 
-.note defining function .remove-python
-function .remove-python { --doc remove the python
-    rm -rf $BORG_VENV;
-}
-
-.note the next line is redundant if omzsh is using plugin \'virtualenvwrapper\'
-.source virtualenvwrapper.sh
