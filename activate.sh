@@ -29,4 +29,70 @@ source functions.sh
     .exec setopt incappendhistory       # Immediately
 }
 
-for script in $(ls [1-9]*.sh | sort); do .source $script; done;
+#======================================================================
+# Install the VENV if missing
+#======================================================================
+
+    [[ -d $BORG_VENV ]] || {
+        .note installing python
+        .exec python3 -m venv $BORG_VENV
+        .source $BORG_VENV/bin/activate
+        .exec pip install virtualenv
+        .exec pip install virtualenvwrapper
+        .exec deactivate
+    }
+
+#======================================================================
+# Activate the virtualenvwrapper
+#======================================================================
+
+    .source virtualenvwrapper.sh
+
+#======================================================================
+# Convenience functions to remove the VENV
+#======================================================================
+
+    function .remove.venv { rm -rf $BORG_VENV; }
+    function .remove.omzsh () { rm -rf $ZSH; }
+
+#======================================================================
+# Install OMZSH if missing
+#======================================================================
+
+    [[ -d $ZSH ]] || {
+        $BORG/vendor/omzsh/install.sh --unattended ;
+    }
+
+#======================================================================
+# Functions to install/uninstall via git repositories
+#======================================================================
+
+function .REPOS.install {
+    for url in $*; do true; done
+    dst=$BORG_REPOS/$url
+    [[ "$1" == "_r" ]] && { shift ; rm -rf ${dst}; }
+    [[ -d $dst ]] || git clone $* ${dst}
+    $dst/borg/install.sh
+}
+
+function .REPOS.uninstall {
+    for url in $*; do true; done
+    dst=$BORG_REPOS/$url
+    [[ -d $dst ]] && rm -rf ${dst}
+}
+
+# minimal : very good
+# virtualenv_prompt_info
+# git_prompt_info
+# minimal fox  kiwi bira steef dallas kafeitu(nice)
+# nanotech : wide, 2level
+# suvash : very good
+# essembeh gozilla sonicradish juanghurtado[!] wedisagree : rich git info
+# jaischeema : pumpkin at ~/borg-dev ±(dev) ✗ ❯
+# strug : origin/dev
+
+.export ZSH_THEME kafeitu # plugins must not contain virtualenv for prompt to show virtual_env)
+plugins=(git virtualenvwrapper)
+.source $ZSH/oh-my-zsh.sh
+
+#for script in $(ls [1-9]*.sh | sort); do .source $script; done;
