@@ -8,6 +8,6 @@
     .exec pip install virtualenvwrapper
     .exec deactivate
 }
-.note copying fresh \'virtualenv\*\' files to \$BORG_BIN
-cp $BORG_VENV/bin/v* $BORG_BIN
+#.note copying fresh \'virtualenv\*\' files to \$BORG_BIN
+#cp $BORG_VENV/bin/v* $BORG_BIN
 
