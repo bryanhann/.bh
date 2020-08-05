@@ -8,6 +8,7 @@ function main () {
     .call   venv
     #.source virtualenvwrapper.sh
     .call   omzsh
+    .source ${ZDOTDIR}/history.sh
 }
 
 #======================================================================
@@ -29,14 +30,6 @@ profile () {
     mkdir -p $BORG_REPOS
     .export PATH            $PATH:$BORG_VENV/bin
     .export PYTHONPATH      $BORG/lib/python
-
-    .export HISTFILE                    ${BORG_LOCAL}/HISTFILE
-    .export HISTSIZE    5000            # How many lines of history to keep in memory
-    .export SAVEHIST    5000            # Number of history entries to save to disk
-    .export HISTDUP     erase           # Erase duplicates in the history file
-    .exec setopt appendhistory          # Append history to the history file (no overwriting)
-    .exec setopt sharehistory           # Share history across terminals
-    .exec setopt incappendhistory       # Immediately
 }
 
 #======================================================================
