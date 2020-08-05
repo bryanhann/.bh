@@ -6,7 +6,7 @@ source $ZDOTDIR/functions.sh
 function main () {
     .call   profile
     .call   venv
-    .source virtualenvwrapper.sh
+    #.source virtualenvwrapper.sh
     .call   omzsh
 }
 
@@ -41,16 +41,18 @@ profile () {
 #  VENV
 #======================================================================
 function venv () {
-    [[ -d $BORG_VENV ]] || venv.install
+    [[ -d $BORG_VENV ]] || venv.install;
+    .exec source $BORG_VENV/bin/activate
+    .source $ZDOTDIR/venv.sh;
+    .exec deactivate
 }
-function venv.remove { rm -rf $BORG_VENV; }
+function venv.remove {
+    .note removing venv;
+    rm -rf $BORG_VENV;
+}
 function venv.install () {
-        .note installing python
-        .exec python3 -m venv $BORG_VENV
-        .source $BORG_VENV/bin/activate
-        .exec pip install virtualenv
-        .exec pip install virtualenvwrapper
-        .exec deactivate
+    .note installing venv;
+    .exec python3 -m venv $BORG_VENV;
 }
 
 #======================================================================
