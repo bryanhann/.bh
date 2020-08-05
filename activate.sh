@@ -22,6 +22,7 @@ profile () {
     .export WORKON_HOME                 ~/.local/borg/WORKON_HOME
     .export PROJECT_HOME                ~/.local/borg/PROJECT_HOME
     .export VIRTUALENVWRAPPER_HOOK_DIR  ~/.local/borg/VIRTUALENVWRAPPER_HOOK_DIR
+    .export VIRTUALENVWRAPPER_PYTHON    ${BORG_VENV}/bin/python
     .export HISTFILE                    ~/.local/borg/HISTFILE
     mkdir -p $WORKON_HOME
     mkdir -p $PROJECT_HOME
