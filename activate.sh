@@ -1,31 +1,21 @@
+source $ZDOTDIR/functions.sh
+
 #======================================================================
-# Functions to make display of installation colorful and nested
+#  MAIN
 #======================================================================
+function main () {
+    .call   profile
+    .call   venv
+    .source virtualenvwrapper.sh
+    .call   omzsh
+}
 
-export NEST=0
-_up      () {  export NEST=$((${NEST}+1)); }
-_down    () {  export NEST=$((${NEST}-1)); }
-_tab     () { [[ "${NEST}" == "0" ]] || for i in $( seq ${NEST} ); do printf '\\t'; done ; }
-_color   () { tput setaf $1; [[ "$2" == "." ]] || tput setab $2; shift; shift; echo -n $*; tput sgr0; }
-_black   () { _color 15  0 $(_tab)$*; echo; }
-_blue    () { _color 15  4 $(_tab)$*; echo; }
-_yellow  () { _color 16 11 $(_tab)$*; echo; }
-_green   () { _color  0 10 $(_tab)$*; echo; }
-_red     () { _color 15  9 $(_tab)$*; echo; }
-.note () { _green "# $*" }
-.exec () { _red exec: $*; $*; }
-.export () { _blue "setting \$$1 := [$2]" ; export $1=$2 }
-.source () { _yellow "++[. $*]" ; _up ; source $* ; _down ; _yellow "--[. $*]"; }
-
-
-# Assume this directory is $ZDOTDIR
-
-#cd $ZDOTDIR
-#source functions.sh
-
-[[ -z "$BORG" ]] && {
+#======================================================================
+#  MAIN
+#======================================================================
+profile () {
+    [[ -z "$BORG" ]] || return
     .export BORG $ZDOTDIR
-
     .export BORG_VENV                   ~/.local/borg/VENV
     .export ZSH                         ~/.local/borg/ZSH
     .export BORG_REPOS                  ~/.local/borg/BORG_REPOS
@@ -33,14 +23,11 @@ _red     () { _color 15  9 $(_tab)$*; echo; }
     .export PROJECT_HOME                ~/.local/borg/PROJECT_HOME
     .export VIRTUALENVWRAPPER_HOOK_DIR  ~/.local/borg/VIRTUALENVWRAPPER_HOOK_DIR
     .export HISTFILE                    ~/.local/borg/HISTFILE
-
     mkdir -p $WORKON_HOME
     mkdir -p $PROJECT_HOME
     mkdir -p $BORG_REPOS
-
     .export PATH            $PATH:$BORG_VENV/bin
     .export PYTHONPATH      $BORG/lib/python
-
     .export HISTSIZE    5000            # How many lines of history to keep in memory
     .export SAVEHIST    5000            # Number of history entries to save to disk
     .export HISTDUP     erase           # Erase duplicates in the history file
@@ -50,69 +37,32 @@ _red     () { _color 15  9 $(_tab)$*; echo; }
 }
 
 #======================================================================
-# Install the VENV if missing
+#  VENV
 #======================================================================
-
-    [[ -d $BORG_VENV ]] || {
+function venv () {
+    [[ -d $BORG_VENV ]] || venv.install
+}
+function venv.remove { rm -rf $BORG_VENV; }
+function venv.install () {
         .note installing python
         .exec python3 -m venv $BORG_VENV
         .source $BORG_VENV/bin/activate
         .exec pip install virtualenv
         .exec pip install virtualenvwrapper
         .exec deactivate
-    }
-
-#======================================================================
-# Activate the virtualenvwrapper
-#======================================================================
-
-    .source virtualenvwrapper.sh
-
-#======================================================================
-# Convenience functions to remove the VENV
-#======================================================================
-
-    function .remove.venv { rm -rf $BORG_VENV; }
-    function .remove.omzsh () { rm -rf $ZSH; }
-
-#======================================================================
-# Install OMZSH if missing
-#======================================================================
-
-    [[ -d $ZSH ]] || {
-        $BORG/vendor/omzsh/install.sh --unattended ;
-    }
-
-#======================================================================
-# Functions to install/uninstall via git repositories
-#======================================================================
-
-function .REPOS.install {
-    for url in $*; do true; done
-    dst=$BORG_REPOS/$url
-    [[ "$1" == "_r" ]] && { shift ; rm -rf ${dst}; }
-    [[ -d $dst ]] || git clone $* ${dst}
-    $dst/borg/install.sh
 }
 
-function .REPOS.uninstall {
-    for url in $*; do true; done
-    dst=$BORG_REPOS/$url
-    [[ -d $dst ]] && rm -rf ${dst}
+#======================================================================
+#  OMZSH
+#======================================================================
+function omzsh () {
+    [[ -d $ZSH ]] || omzsh.install
+    .export ZSH_THEME kafeitu # plugins must not contain virtualenv for prompt to show virtual_env)
+    plugins=(git virtualenvwrapper)
+    .source $ZSH/oh-my-zsh.sh
 }
+function omzsh.remove   () { rm -rf $ZSH; }
+function omzsh.install  () { $BORG/vendor/omzsh/install.sh --unattended; }
 
-# minimal : very good
-# virtualenv_prompt_info
-# git_prompt_info
-# minimal fox  kiwi bira steef dallas kafeitu(nice)
-# nanotech : wide, 2level
-# suvash : very good
-# essembeh gozilla sonicradish juanghurtado[!] wedisagree : rich git info
-# jaischeema : pumpkin at ~/borg-dev ±(dev) ✗ ❯
-# strug : origin/dev
 
-.export ZSH_THEME kafeitu # plugins must not contain virtualenv for prompt to show virtual_env)
-plugins=(git virtualenvwrapper)
-.source $ZSH/oh-my-zsh.sh
-
-#for script in $(ls [1-9]*.sh | sort); do .source $script; done;
+.call main
