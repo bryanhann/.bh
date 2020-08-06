@@ -9,9 +9,9 @@ _yellow  () { _color 16 11 $(_tab)$*; echo; }
 _green   () { _color  0 10 $(_tab)$*; echo; }
 _red     () { _color 15  9 $(_tab)$*; echo; }
 
-bh0note () { _green "# $*" }
-bh0exec () { _red exec: $*; $*; }
-bh0export () { _blue "setting \$$1 := [$2]" ; export $1=$2 }
-bh0source () { _yellow "++[. $*]" ; _up ; source $* ; _down ; _yellow "--[. $*]"; }
-bh0call () { _yellow "++[$*]" ; _up ; $* ; _down ; _yellow "--[$*]"; }
+bh0note ()      { _green "# $*" }
+bh0exec ()      { _red exec: $*; $*; }
+bh0export ()    { _blue "setting \$$1 := [$2]" ; export $1=$2 }
+bh0call ()      { _yellow "++[$*]" ; _up ; $* ; _down ; _yellow "--[$*]"; }
+bh0source ()    { bh0call source $*; }
 
