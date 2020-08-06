@@ -10,6 +10,7 @@ function profile.main { profile.firstrun }
 function profile.firstrun {
     .firstrun || return
     .export BORG_LOCAL      ~/.local/borg
+    .export BORG_VENDOR     ${ZDOTDIR}/vendor
     .export BORG_VENV       ${BORG_LOCAL}/VENV
     .export PATH            $PATH:$BORG_VENV/bin
     .export PYTHONPATH      $ZDOTDIR/lib/python
@@ -37,7 +38,7 @@ function venv.configure {
 }
 
 function omzsh.main { omzsh.firstrun; omzsh.install; omzsh.configure; omzsh.activate; }
-function omzsh.install { $BORG/vendor/omzsh/install.sh --unattended; }
+function omzsh.install { ${BORG_VENDOR}/omzsh/install.sh --unattended; }
 function omzsh.remove { .note removing omzsh; rm -rf $ZSH; }
 function omzsh.activate { .source $ZSH/oh-my-zsh.sh }
 function omzsh.firstrun {
