@@ -15,7 +15,6 @@ function main () {
     .call venv
     .call omzsh
     .source ${ZDOTDIR}/history.sh
-    [[ -z "$BHPID" ]] && .export BHPID $$
 }
 
 function profile () {
@@ -44,6 +43,7 @@ function omzsh.install { $BORG/vendor/omzsh/install.sh --unattended; }
 function omzsh.remove { .note removing omzsh; rm -rf $ZSH; }
 function omzsh.activate { .source $ZSH/oh-my-zsh.sh }
 
-source $ZDOTDIR/functions.sh
 
+#############################################################################################
 .call main
+.firstrun && echo first || echo not first
