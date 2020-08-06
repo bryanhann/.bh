@@ -17,11 +17,8 @@ function main () {
     .source ${ZDOTDIR}/history.sh
 }
 
-function profile () {
-    .firstrun || return
-
-    #[[ -z "$BORG" ]] || return
-    #.export BORG $ZDOTDIR
+function profile { .firstrun && profile.firstrun }
+function profile.firstrun {
     .export BORG_LOCAL      ~/.local/borg
     .export BORG_VENV       ${BORG_LOCAL}/VENV
     .export PATH            $PATH:$BORG_VENV/bin
