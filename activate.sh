@@ -18,8 +18,10 @@ function main () {
 }
 
 function profile () {
-    [[ -z "$BORG" ]] || return
-    .export BORG $ZDOTDIR
+    .firstrun || return
+
+    #[[ -z "$BORG" ]] || return
+    #.export BORG $ZDOTDIR
     .export BORG_LOCAL      ~/.local/borg
     .export BORG_VENV       ${BORG_LOCAL}/VENV
     .export PATH            $PATH:$BORG_VENV/bin
