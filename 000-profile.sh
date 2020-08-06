@@ -1,11 +1,10 @@
-function profile.main { profile.firstrun }
-function profile.firstrun {
-    .firstrun || return
-    .export BORG_LOCAL      ~/.local/borg
-    .export BORG_VENDOR     ${ZDOTDIR}/vendor
-    .export BORG_VENV       ${BORG_LOCAL}/VENV
-    .export PATH            $PATH:$BORG_VENV/bin
-    .export PYTHONPATH      $ZDOTDIR/lib/python
+function _LOCAL_  { echo ~/.local/borg      }
+function _HOME_   { echo ${ZDOTDIR}         }
+
+function _VENV_   { echo $(_LOCAL_)/VENV    }
+function _VENDOR_ { echo $(_HOME_)/vendor  }
+.firstrun && {
+    .export PATH            $PATH:$(_VENV_)/bin
+    .export PYTHONPATH      $(_HOME_)/lib/python
 }
 
-profile.main
