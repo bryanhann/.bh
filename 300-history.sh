@@ -1,5 +1,5 @@
-history.main () { history.firstrun }
-history.firstrun () {
+history_main () { history_firstrun }
+history_firstrun () {
     bh0firstrun || return
     bh0export HISTFILE                    $(_LOCAL_)/HISTFILE
     bh0export HISTSIZE    5000            # How many lines of history to keep in memory
@@ -10,4 +10,4 @@ history.firstrun () {
     bh0exec setopt incappendhistory       # Immediately
 }
 
-history.main
+history_main
