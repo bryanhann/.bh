@@ -3,8 +3,8 @@ function _HOME_   { echo ${ZDOTDIR}         }
 
 function _VENV_   { echo $(_LOCAL_)/VENV    }
 function _VENDOR_ { echo $(_HOME_)/vendor  }
-.firstrun && {
-    .export PATH            $PATH:$(_VENV_)/bin
-    .export PYTHONPATH      $(_HOME_)/lib/python
+bh0firstrun && {
+    bh0export PATH            $PATH:$(_VENV_)/bin
+    bh0export PYTHONPATH      $(_HOME_)/lib/python
 }
 
