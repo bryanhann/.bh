@@ -44,6 +44,3 @@ function omzsh.remove { .note removing omzsh; rm -rf $ZSH; }
 function omzsh.activate { .source $ZSH/oh-my-zsh.sh }
 
 
-#############################################################################################
-.call main
-.firstrun && echo first || echo not first
