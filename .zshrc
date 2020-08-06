@@ -1,5 +1,6 @@
-function .firstrun { [[ -z "$BHPID" ]] && return 0 || return 1 }
+pushd $ZDOTDIR
 source $ZDOTDIR/functions.sh
-source $ZDOTDIR/activate.sh
-.call main
+function .firstrun { [[ -z "$BHPID" ]] && return 0 || return 1 }
+for script in $( ls [0-9]*.sh | sort ); do .source ${ZDOTDIR}/$script; done
+popd
 .firstrun && export BHPID=$$
