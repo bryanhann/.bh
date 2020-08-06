@@ -1,14 +1,21 @@
-function omzsh.main { omzsh.firstrun; omzsh.install; omzsh.configure; omzsh.activate; }
-function omzsh.install { ${BORG_VENDOR}/omzsh/install.sh --unattended; }
-function omzsh.remove { .note removing omzsh; rm -rf $ZSH; }
-function omzsh.activate { .source $ZSH/oh-my-zsh.sh }
 function omzsh.firstrun {
     .firstrun || return
     .export ZSH ${BORG_LOCAL}/ZSH
-}
-function omzsh.configure {
-    .export ZSH_THEME kafeitu # plugins must not contain virtualenv for prompt to show virtual_env)
-    plugins=(git virtualenvwrapper)
+     omzsh.install
+ }
+
+function omzsh.main {
+    source $ZDOTDIR/omzsh.user.activate.sh
 }
 
+function omzsh._install { ${BORG_VENDOR}/omzsh/install.sh --unattended; }
+function omzsh.install { omzsh.is_installed || {omzsh._install; omzsh.is_installed } }
+function omzsh.remove { .note removing omzsh; rm -rf $ZSH; }
+
+function omzsh.is_installed {
+    [[ -d $ZSH ]] && { .note omzsh is installed && return 0 }
+    [[ -d $ZSH ]] || { .note omzsh is not installed && return 1 }
+}
+
+omzsh.firstrun
 omzsh.main
