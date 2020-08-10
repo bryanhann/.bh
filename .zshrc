@@ -30,10 +30,15 @@ bh0firstrun () {
 }
 
 ######## CALLS BEGIN ########
+bh0export BH0__RAW__        ~/.BH0__RAW__
+bh0export BH0__LOCAL__      ~/.BH0__LOCAL__
+bh0export BH0__PERSIST__    ~/.BH0__PERSIST__.repo
+bh0export BH0__MASTER__     ~/.BH0__MASTER__.repo
 
-bh0include bh0.__LOCAL__
-bh0include bh0.__RAW__
-bh0include bh0.__PERSIST__
-bh0include bh0.__MASTER__
+mkdir -p ${BH0__RAW__}
+mkdir -p ${BH0__LOCAL__}
+#[[ -d ${BH0__PERSIST__} ]] || git clone https://github.com/bryanhann/.__PERSIST__ ${BH0__PERSIST__}
+bh0include bh0.__persist__
+bh0include bh0.__user__
 
 bh0firstrun && bh0export   __BHPID__ $$
