@@ -17,7 +17,7 @@ bh0source ()    { bh0call source $*; }
 
 bh0include () {
     url=https://github.com/bryanhann/$1
-    dst=~/$1
+    dst=~/.bh/$1
     [[ -d $dst ]] && bh0note found external: ${1}
     [[ -d $dst ]] || bh0note fetching external: ${1}
     [[ -d $dst ]] || bh0exec git clone $url $dst
