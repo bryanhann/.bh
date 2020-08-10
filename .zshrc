@@ -31,5 +31,9 @@ bh0firstrun () {
 
 ######## CALLS BEGIN ########
 
-true        && bh0include bh0.__MASTER__
+bh0include bh0.__LOCAL__
+bh0include bh0.__RAW__
+bh0include bh0.__PERSIST__
+bh0include bh0.__MASTER__
+
 bh0firstrun && bh0export   __BHPID__ $$
