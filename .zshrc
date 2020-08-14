@@ -15,18 +15,13 @@ bh0export ()    { _blue "setting \$$1 := [$2]" ; export $1=$2 }
 bh0call ()      { _yellow "++[$*]" ; _up ; $* ; _down ; _yellow "--[$*]"; }
 bh0source ()    { bh0call source $*; }
 
-bh0include () {
-    url=https://github.com/bryanhann/$1
-    dst=~/.bh/$1
-    [[ -d $dst ]] && bh0note found external: ${1}
-    [[ -d $dst ]] || bh0note fetching external: ${1}
-    [[ -d $dst ]] || bh0exec git clone $url $dst
-    [[ -d $dst ]] || { bh0note cannot fetch external ${1} -- giving up; return ; }
-    [[ -f $dst/activate.sh ]] && bh0source $dst/activate.sh ;
+bh0include () { 
+    bh0source $(bh0github bryanhann/$1)/activate.sh; 
 }
+
 bh0github () {
     src=https://github.com/$1
-    dst=${2-${BH0__LOCAL__}/http:/github.com/$1}
+    dst=${2-${HOME}/.bh/http/github.com/$1}
     [[ -d ${dst} ]] || git clone $src $dst
     echo $dst
 }
@@ -50,7 +45,7 @@ bh0firstrun () {
 #   processed by (and eventually removed by) these services. It SHOULD NOT be archived.
 #   It SHOULD NOT be subject to version control. It MUST NOT be removed.
 
-bh0export BH0__RAW__        ~/.BH0__RAW__
+bh0export BH0__RAW__        ~/.bh/RAW
 mkdir -p ${BH0__RAW__}
 
 #   folder:     [$BH0__LOCAL__]
@@ -60,7 +55,7 @@ mkdir -p ${BH0__RAW__}
 #   it SHOULD NOT be removed except for testing purposes or for wholesale restoration if
 #   corrupted. 
 
-bh0export BH0__LOCAL__      ~/.BH0__LOCAL__
+bh0export BH0__LOCAL__      ~/.bh/LOCAL
 mkdir -p ${BH0__LOCAL__}
 
 #   folder:     [$BH0__PERSIST__]
@@ -76,7 +71,7 @@ mkdir -p ${BH0__LOCAL__}
 #   of the included [bh0.__persist__] which should be changed only for administration
 #   purposes.
 
-bh0export BH0__PERSIST__    ~/.BH0__PERSIST__.repo
+bh0export BH0__PERSIST__    ~/.bh/PERSIST
 bh0include bh0.__persist__
 
 #   include:    [bh0.__user__] is where conguration info is maintained and
