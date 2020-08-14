@@ -72,6 +72,7 @@ mkdir -p ${BH0__LOCAL__}
 #   purposes.
 
 bh0export BH0__PERSIST__    ~/.bh/PERSIST
+[[ -d ${BH0__PERSIST__} ]] || git clone https://github.com/bryanhann/.__PERSIST__ ${BH0__PERSIST__}
 bh0include bh0.__persist__
 
 #   include:    [bh0.__user__] is where conguration info is maintained and
