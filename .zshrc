@@ -13,7 +13,7 @@ bh0note ()      { _green "# $*" }
 bh0exec ()      { _red exec: $*; $*; }
 bh0export ()    { _blue "setting \$$1 := [$2]" ; export $1=$2 }
 bh0call ()      { _yellow "++[$*]" ; _up ; $* ; _down ; _yellow "--[$*]"; }
-bh0source ()    { bh0call source $*; }
+bh0source ()    { [[ -f "${1}" ]] && { bh0call source $*; } || { bh0note No activation file $1; }; } 
 
 bh0include () { 
     bh0source $(bh0github bryanhann/$1)/activate.sh; 
