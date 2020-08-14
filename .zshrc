@@ -24,6 +24,12 @@ bh0include () {
     [[ -d $dst ]] || { bh0note cannot fetch external ${1} -- giving up; return ; }
     [[ -f $dst/activate.sh ]] && bh0source $dst/activate.sh ;
 }
+bh0github () {
+    src=https://github.com/$1
+    dst=${2-${BH0__LOCAL__}/http:/github.com/$1}
+    [[ -d ${dst} ]] || git clone $src $dst
+    echo $dst
+}
 
 #   function:   [bh0firstrun]
 #   flag:       [$__BHPID__]
