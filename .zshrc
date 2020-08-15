@@ -85,3 +85,16 @@ bh0include bh0.__user__
 bh0firstrun && {
     bh0export   __BHPID__ $$
 }
+
+bh0__vim__ () {
+    dst=~/.config/vim
+    url=https://github.com/bryanhann/.config.vim
+    [[ -d $dst ]] || {
+        git clone ${url} ${dst}
+        cd ${dst}
+        bh0source ./install
+    }
+    export VIMINIT='let $MYVIMRC="$HOME/.config/vim/vimrc" | source $MYVIMRC'
+}
+
+bh0__vim__
