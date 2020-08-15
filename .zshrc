@@ -84,6 +84,7 @@ bh0include bh0.__user__
 
 bh0firstrun && {
     bh0export   __BHPID__ $$
+    bh0export   PATH ${PATH}:${HOME}/.local/bin
 }
 
 bh0__vim__ () {
