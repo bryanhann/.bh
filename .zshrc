@@ -16,9 +16,11 @@ bh0call ()      { _yellow "++[$*]" ; _up ; $* ; _down ;} # _yellow "--[$*]"; }
 bh0source ()    { [[ -f "${1}" ]] && { bh0call source $*; } || { bh0note No activation file $1; }; } 
 bh0include ()   { bh0source $(bh0github bryanhann/$1)/activate.sh; }
 
+bh0export BH0DOT ${HOME}/.bh
+
 bh0github () {
     src=https://github.com/$1
-    dst=${2-${HOME}/.bh/http/github.com/$1}
+    dst=${2-${BH0DOT}/http/github.com/$1}
     [[ -d ${dst} ]] || git clone $src $dst
     echo $dst
 }
