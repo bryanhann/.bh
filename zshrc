@@ -23,7 +23,6 @@ cp ${ZDOTDIR}/readme.raw    ${__BH0_RAW__}
 cp ${ZDOTDIR}/readme.local  ${__BH0_LOCAL__}
 cp ${ZDOTDIR}/readme.http   ${__BH0_HTTP__}
 
-bh0include bh0.shell.config
 bh0include bh0.__main__
 bh0installvim
 bh0firstrun && bh0endfirstrun
