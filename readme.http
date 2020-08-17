@@ -1,0 +1,3 @@
+The HTTP folder is where included services will be cloned. It SHOULD
+NOT be removed. It MUST NOT be removed prior to confirming that all
+repos are first in a clean slate and pushed to their remotes.

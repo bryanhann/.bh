@@ -1,0 +1,5 @@
+The ACC folder is where included services will store raw data to be
+processed by (and eventually removed by) these services. It SHOULD
+NOT be archived.  It SHOULD NOT be subject to version control. It
+MUST NOT be removed. This is similar to the RAW folder which is
+included as well for backwards compatability.

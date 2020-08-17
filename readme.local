@@ -1,0 +1,4 @@
+The LOCAL folder is where included services will store code or data
+which, though recreatable, would take a long time to recreate. It MAY
+be removed but it  SHOULD NOT be removed except for testing purposes
+or for wholesale restoration if
