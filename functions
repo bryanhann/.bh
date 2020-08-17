@@ -32,13 +32,6 @@ bh0github () {
     echo $dst
 }
 
-bh0installvim () {
-    dst=${HOME}/.config/vim
-    url=${__BH0_URL_BH__}/.config.vim
-    [[ -d $dst ]] || { git clone ${url} ${dst} ; cd ${dst} ; bh0source ./install ; }
-    export VIMINIT='let $MYVIMRC="$HOME/.config/vim/vimrc" | source $MYVIMRC'
-}
-
 #   function:   [bh0firstrun]
 #   flag:       [$__BHPID__]
 #
